@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "wood",
+  "pattern": [
+      "MM",
+      "MM"
+  ],
+  "key": {
+      "M": {
+          "item": "minecraft:mangrove_log"
+      }
+  },
+  "result": {
+      "id": "minecraft:mangrove_wood",
+      "count": 4
+  }
+}

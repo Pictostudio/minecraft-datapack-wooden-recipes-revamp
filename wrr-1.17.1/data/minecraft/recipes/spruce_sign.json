@@ -1,0 +1,21 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_sign",
+    "pattern": [
+        "PPP",
+        "PPP",
+        " S "
+    ],
+    "key": {
+        "P": {
+            "item": "minecraft:spruce_planks"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "minecraft:spruce_sign",
+        "count": 6
+    }
+}

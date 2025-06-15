@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "stripped_wood",
+  "pattern": [
+      "SS",
+      "SS"
+  ],
+  "key": {
+      "S": {
+          "item": "minecraft:stripped_spruce_log"
+      }
+  },
+  "result": {
+      "id": "minecraft:stripped_spruce_wood",
+      "count": 4
+  }
+}

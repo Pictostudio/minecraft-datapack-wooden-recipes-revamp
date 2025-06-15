@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "wood",
+  "pattern": [
+      "BB",
+      "BB"
+  ],
+  "key": {
+      "B": {
+          "item": "minecraft:birch_log"
+      }
+  },
+  "result": {
+      "id": "minecraft:birch_wood",
+      "count": 4
+  }
+}

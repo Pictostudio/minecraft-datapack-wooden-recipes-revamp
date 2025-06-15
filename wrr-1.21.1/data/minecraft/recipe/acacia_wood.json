@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "wood",
+  "pattern": [
+      "AA",
+      "AA"
+  ],
+  "key": {
+      "A": {
+          "item": "minecraft:acacia_log"
+      }
+  },
+  "result": {
+      "id": "minecraft:acacia_wood",
+      "count": 4
+  }
+}

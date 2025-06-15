@@ -1,0 +1,26 @@
+{
+	"env": {
+		"dataSource": "GitHub",
+		"dependencies": [
+			"@vanilla-mcdoc"
+		],
+		"feature": {
+			"codeActions": true,
+			"colors": true,
+			"completions": true,
+			"documentHighlighting": true,
+			"documentLinks": true,
+			"foldingRanges": true,
+			"formatting": true,
+			"hover": true,
+			"semanticColoring": true,
+			"selectionRanges": true,
+			"signatures": true
+		},
+		"gameVersion": "Auto",
+		"language": "Default",
+		"plugins": [],
+		"mcmetaSummaryOverrides": {},
+		"useFilePolling": false
+	}
+}

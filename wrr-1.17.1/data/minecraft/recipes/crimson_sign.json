@@ -1,0 +1,21 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_sign",
+    "pattern": [
+        "CCC",
+        "CCC",
+        " S "
+    ],
+    "key": {
+        "C": {
+            "item": "minecraft:crimson_planks"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "minecraft:crimson_sign",
+        "count": 6
+    }
+}

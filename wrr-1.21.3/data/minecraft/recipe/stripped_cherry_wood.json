@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "stripped_wood",
+  "pattern": [
+      "CC",
+      "CC"
+  ],
+  "key": {
+      "C": {
+          "item": "minecraft:stripped_cherry_log"
+      }
+  },
+  "result": {
+      "id": "minecraft:stripped_cherry_wood",
+      "count": 4
+  }
+}

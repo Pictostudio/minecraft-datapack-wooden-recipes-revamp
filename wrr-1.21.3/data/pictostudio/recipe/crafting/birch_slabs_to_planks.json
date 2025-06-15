@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "group": "wood_planks",
+    "pattern": [
+        "B",
+        "B"
+    ],
+    "key": {
+        "B": {
+            "item": "minecraft:birch_slab"
+        }
+    },
+    "result": {
+        "id": "minecraft:birch_planks",
+        "count": 1
+    }
+}

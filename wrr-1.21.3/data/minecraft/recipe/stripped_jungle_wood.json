@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "stripped_wood",
+  "pattern": [
+      "JJ",
+      "JJ"
+  ],
+  "key": {
+      "J": {
+          "item": "minecraft:stripped_jungle_log"
+      }
+  },
+  "result": {
+      "id": "minecraft:stripped_jungle_wood",
+      "count": 4
+  }
+}

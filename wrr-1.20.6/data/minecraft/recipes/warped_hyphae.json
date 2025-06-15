@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "wood",
+  "pattern": [
+      "WW",
+      "WW"
+  ],
+  "key": {
+      "W": {
+          "item": "minecraft:warped_stem"
+      }
+  },
+  "result": {
+      "id": "minecraft:warped_hyphae",
+      "count": 4
+  }
+}

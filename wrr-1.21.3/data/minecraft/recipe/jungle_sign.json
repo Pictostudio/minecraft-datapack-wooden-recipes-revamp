@@ -1,0 +1,21 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_sign",
+    "pattern": [
+        "JJJ",
+        "JJJ",
+        " S "
+    ],
+    "key": {
+        "J": {
+            "item": "minecraft:jungle_planks"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "id": "minecraft:jungle_sign",
+        "count": 6
+    }
+}

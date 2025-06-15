@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "group": "wood",
+    "pattern": [
+        "DD",
+        "DD"
+    ],
+    "key": {
+        "D": {
+            "item": "minecraft:dark_oak_log"
+        }
+    },
+    "result": {
+        "id": "minecraft:dark_oak_wood",
+        "count": 4
+    }
+}
