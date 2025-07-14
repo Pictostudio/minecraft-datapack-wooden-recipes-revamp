@@ -1,0 +1,21 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_sign",
+    "pattern": [
+        "DDD",
+        "DDD",
+        " S "
+    ],
+    "key": {
+        "D": {
+            "item": "minecraft:dark_oak_planks"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "item": "minecraft:dark_oak_sign",
+        "count": 6
+    }
+}

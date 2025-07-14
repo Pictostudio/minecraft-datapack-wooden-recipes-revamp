@@ -1,0 +1,17 @@
+{
+  "type": "crafting_shaped",
+  "group": "wood",
+  "pattern": [
+      "CC",
+      "CC"
+  ],
+  "key": {
+      "C": {
+          "item": "minecraft:crimson_stem"
+      }
+  },
+  "result": {
+      "item": "minecraft:crimson_hyphae",
+      "count": 4
+  }
+}
