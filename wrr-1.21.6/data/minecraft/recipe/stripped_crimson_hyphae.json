@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "group": "stripped_wood",
+  "pattern": [
+      "CC",
+      "CC"
+  ],
+  "key": {
+      "C": "minecraft:stripped_crimson_stem"
+  },
+  "result": {
+      "id": "minecraft:stripped_crimson_hyphae",
+      "count": 4
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "type": "crafting_shaped",
+    "group": "wood_planks",
+    "pattern": [
+        "J",
+        "J"
+    ],
+    "key": {
+        "J": "minecraft:jungle_slab"
+    },
+    "result": {
+        "id": "minecraft:jungle_planks",
+        "count": 1
+    }
+}
