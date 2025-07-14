@@ -1,0 +1,15 @@
+{
+  "type": "crafting_shaped",
+  "group": "wood",
+  "pattern": [
+      "PP",
+      "PP"
+  ],
+  "key": {
+      "P": "minecraft:pale_oak_log"
+  },
+  "result": {
+      "id": "minecraft:pale_oak_wood",
+      "count": 4
+  }
+}
