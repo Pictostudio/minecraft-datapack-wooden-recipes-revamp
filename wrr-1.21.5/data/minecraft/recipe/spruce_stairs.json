@@ -1,0 +1,16 @@
+{
+  "type": "crafting_shaped",
+  "group": "wooden_stairs",
+  "pattern": [
+      "S  ",
+      "SS ",
+      "SSS"
+  ],
+  "key": {
+      "S": "minecraft:spruce_planks"
+  },
+  "result": {
+      "id": "minecraft:spruce_stairs",
+      "count": 6
+  }
+}
