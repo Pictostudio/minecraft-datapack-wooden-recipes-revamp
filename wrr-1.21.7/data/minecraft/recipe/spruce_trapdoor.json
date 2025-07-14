@@ -1,0 +1,15 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_trapdoor",
+    "pattern": [
+        "SSS",
+        "SSS"
+    ],
+    "key": {
+        "S": "minecraft:spruce_planks"
+    },
+    "result": {
+        "id": "minecraft:spruce_trapdoor",
+        "count": 6
+    }
+}

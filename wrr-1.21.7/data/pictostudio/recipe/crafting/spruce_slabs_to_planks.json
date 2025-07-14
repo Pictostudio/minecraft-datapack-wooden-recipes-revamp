@@ -1,0 +1,15 @@
+{
+    "type": "crafting_shaped",
+    "group": "wood_planks",
+    "pattern": [
+        "S",
+        "S"
+    ],
+    "key": {
+        "S": "minecraft:spruce_slab"
+    },
+    "result": {
+        "id": "minecraft:spruce_planks",
+        "count": 1
+    }
+}

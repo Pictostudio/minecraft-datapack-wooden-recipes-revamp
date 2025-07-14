@@ -1,0 +1,11 @@
+{
+    "type": "crafting_shapeless",
+    "group": "wood_planks",
+    "ingredients": [
+      "minecraft:bamboo_mosaic"
+    ],
+    "result": {
+      "id": "minecraft:bamboo_planks",
+      "count": 1
+    }
+  }

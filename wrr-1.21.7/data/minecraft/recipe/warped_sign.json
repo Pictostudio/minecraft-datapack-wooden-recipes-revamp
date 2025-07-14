@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_sign",
+    "pattern": [
+        "WWW",
+        "WWW",
+        " S "
+    ],
+    "key": {
+        "W": "minecraft:warped_planks",
+        "S": "minecraft:stick"
+    },
+    "result": {
+        "id": "minecraft:warped_sign",
+        "count": 6
+    }
+}
