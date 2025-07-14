@@ -5,9 +5,7 @@
         "CC"
     ],
     "key": {
-        "C": {
-            "item": "minecraft:cherry_planks"
-        }
+        "C": "minecraft:cherry_planks"
     },
     "result": {
         "id": "minecraft:cherry_pressure_plate",

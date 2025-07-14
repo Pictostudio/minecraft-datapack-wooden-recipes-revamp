@@ -6,9 +6,7 @@
         "OO"
     ],
     "key": {
-        "O": {
-            "item": "minecraft:oak_log"
-        }
+        "O": "minecraft:oak_log"
     },
     "result": {
         "id": "minecraft:oak_wood",

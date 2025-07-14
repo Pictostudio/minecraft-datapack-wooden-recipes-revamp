@@ -6,12 +6,8 @@
         "BSB"
     ],
     "key": {
-        "B": {
-            "item": "minecraft:bamboo_mosaic"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+        "B": "minecraft:bamboo_mosaic",
+        "S": "minecraft:stick"
     },
     "result": {
         "id": "minecraft:bamboo_fence",

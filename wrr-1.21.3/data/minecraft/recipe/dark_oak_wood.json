@@ -6,9 +6,7 @@
         "DD"
     ],
     "key": {
-        "D": {
-            "item": "minecraft:dark_oak_log"
-        }
+        "D": "minecraft:dark_oak_log"
     },
     "result": {
         "id": "minecraft:dark_oak_wood",

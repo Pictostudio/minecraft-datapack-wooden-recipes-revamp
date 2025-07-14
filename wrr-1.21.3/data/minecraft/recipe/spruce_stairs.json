@@ -7,9 +7,7 @@
       "SSS"
   ],
   "key": {
-      "S": {
-          "item": "minecraft:spruce_planks"
-      }
+      "S": "minecraft:spruce_planks"
   },
   "result": {
       "id": "minecraft:spruce_stairs",

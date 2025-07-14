@@ -7,12 +7,8 @@
         " S "
     ],
     "key": {
-        "B": {
-            "item": "minecraft:birch_planks"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+        "B": "minecraft:birch_planks",
+        "S": "minecraft:stick"
     },
     "result": {
         "id": "minecraft:birch_sign",

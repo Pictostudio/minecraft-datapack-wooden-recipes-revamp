@@ -5,9 +5,7 @@
         "AA"
     ],
     "key": {
-        "A": {
-            "item": "minecraft:acacia_planks"
-        }
+        "A": "minecraft:acacia_planks"
     },
     "result": {
         "id": "minecraft:acacia_pressure_plate",

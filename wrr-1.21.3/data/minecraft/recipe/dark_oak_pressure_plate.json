@@ -5,9 +5,7 @@
         "DD"
     ],
     "key": {
-        "D": {
-            "item": "minecraft:dark_oak_planks"
-        }
+        "D": "minecraft:dark_oak_planks"
     },
     "result": {
         "id": "minecraft:dark_oak_pressure_plate",

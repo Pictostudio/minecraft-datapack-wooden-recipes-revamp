@@ -7,9 +7,7 @@
       "LLL"
   ],
   "key": {
-      "L": {
-          "tag": "logs"
-      }
+      "L": "#minecraft:logs"
   },
   "result": {
       "id": "minecraft:chest",

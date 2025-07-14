@@ -2,9 +2,7 @@
     "type": "crafting_shapeless",
     "group": "wooden_button",
     "ingredients": [
-      {
-        "item": "minecraft:jungle_planks"
-      }
+        "minecraft:jungle_planks"
     ],
     "result": {
       "id": "minecraft:jungle_button",

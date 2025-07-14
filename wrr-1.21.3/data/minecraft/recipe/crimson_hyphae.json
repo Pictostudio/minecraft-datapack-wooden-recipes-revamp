@@ -6,9 +6,7 @@
       "CC"
   ],
   "key": {
-      "C": {
-          "item": "minecraft:crimson_stem"
-      }
+      "C": "minecraft:crimson_stem"
   },
   "result": {
       "id": "minecraft:crimson_hyphae",

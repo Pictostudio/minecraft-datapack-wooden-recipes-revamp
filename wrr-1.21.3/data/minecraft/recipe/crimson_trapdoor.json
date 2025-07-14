@@ -6,9 +6,7 @@
         "CCC"
     ],
     "key": {
-        "C": {
-            "item": "minecraft:crimson_planks"
-        }
+        "C": "minecraft:crimson_planks"
     },
     "result": {
         "id": "minecraft:crimson_trapdoor",

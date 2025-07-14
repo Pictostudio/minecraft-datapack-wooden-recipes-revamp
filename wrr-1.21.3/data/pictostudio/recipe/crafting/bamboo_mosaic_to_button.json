@@ -2,9 +2,7 @@
     "type": "crafting_shapeless",
     "group": "wooden_button",
     "ingredients": [
-      {
-        "item": "minecraft:bamboo_mosaic"
-      }
+      "minecraft:bamboo_mosaic"
     ],
     "result": {
       "id": "minecraft:bamboo_button",

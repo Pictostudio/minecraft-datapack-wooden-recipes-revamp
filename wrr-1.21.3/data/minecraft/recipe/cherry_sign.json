@@ -7,12 +7,8 @@
         " S "
     ],
     "key": {
-        "C": {
-            "item": "minecraft:cherry_planks"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+        "C": "minecraft:cherry_planks",
+        "S": "minecraft:stick"
     },
     "result": {
         "id": "minecraft:cherry_sign",

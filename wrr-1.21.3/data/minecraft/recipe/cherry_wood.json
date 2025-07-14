@@ -6,9 +6,7 @@
       "CC"
   ],
   "key": {
-      "C": {
-          "item": "minecraft:cherry_log"
-      }
+      "C": "minecraft:cherry_log"
   },
   "result": {
       "id": "minecraft:cherry_wood",

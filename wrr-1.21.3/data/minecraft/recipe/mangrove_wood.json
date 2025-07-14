@@ -6,9 +6,7 @@
       "MM"
   ],
   "key": {
-      "M": {
-          "item": "minecraft:mangrove_log"
-      }
+      "M": "minecraft:mangrove_log"
   },
   "result": {
       "id": "minecraft:mangrove_wood",

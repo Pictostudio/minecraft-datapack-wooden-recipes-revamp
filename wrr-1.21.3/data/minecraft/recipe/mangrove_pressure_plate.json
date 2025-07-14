@@ -5,9 +5,7 @@
         "MM"
     ],
     "key": {
-        "M": {
-            "item": "minecraft:mangrove_planks"
-        }
+        "M":"minecraft:mangrove_planks"
     },
     "result": {
         "id": "minecraft:mangrove_pressure_plate",

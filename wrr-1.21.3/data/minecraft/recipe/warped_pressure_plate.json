@@ -5,9 +5,7 @@
         "WW"
     ],
     "key": {
-        "W": {
-            "item": "minecraft:warped_planks"
-        }
+        "W": "minecraft:warped_planks"
     },
     "result": {
         "id": "minecraft:warped_pressure_plate",

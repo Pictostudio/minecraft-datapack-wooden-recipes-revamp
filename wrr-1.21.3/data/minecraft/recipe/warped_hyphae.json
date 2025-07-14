@@ -6,9 +6,7 @@
       "WW"
   ],
   "key": {
-      "W": {
-          "item": "minecraft:warped_stem"
-      }
+      "W": "minecraft:warped_stem"
   },
   "result": {
       "id": "minecraft:warped_hyphae",

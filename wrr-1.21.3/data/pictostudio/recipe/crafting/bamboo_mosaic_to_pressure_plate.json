@@ -5,9 +5,7 @@
         "BB"
     ],
     "key": {
-        "B": {
-            "item": "minecraft:bamboo_mosaic"
-        }
+        "B": "minecraft:bamboo_mosaic"
     },
     "result": {
         "id": "minecraft:bamboo_pressure_plate",

@@ -7,12 +7,8 @@
         " S "
     ],
     "key": {
-        "P": {
-            "item": "minecraft:spruce_planks"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+        "P": "minecraft:spruce_planks",
+        "S": "minecraft:stick"
     },
     "result": {
         "id": "minecraft:spruce_sign",
