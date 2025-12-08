@@ -1,0 +1,17 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_sign",
+    "pattern": [
+        "BBB",
+        "BBB",
+        " S "
+    ],
+    "key": {
+        "B": "minecraft:bamboo_planks",
+        "S": "minecraft:stick"
+    },
+    "result": {
+        "id": "minecraft:bamboo_sign",
+        "count": 6
+    }
+}
