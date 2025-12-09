@@ -1,0 +1,16 @@
+name: Versioning
+on: 
+  push:
+    branches:
+      - development
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Code
+        uses: actions/checkout@v6
+      - name:  Read Version
+        run: |
+          VERSION=$(cat VERSION)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Current version: $VERSION"
