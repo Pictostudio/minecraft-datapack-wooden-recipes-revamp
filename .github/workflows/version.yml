@@ -24,9 +24,9 @@ jobs:
           COMMIT_MSG=$(git log -1 --pretty=%B) 
           BUMP="patch"
 
-          if [[ "$COMMIT_MSG" == *"[major]"* ]]; then
+          if [[ "$COMMIT_MSG" == *"[feat]"* ]]; then
             BUMP="major"
-          elif [[ "$COMMIT_MSG" == *"[minor]"* ]]; then
+          elif [[ "$COMMIT_MSG" == *"[fix]"* ]]; then
             BUMP="minor"
           fi
 
@@ -39,3 +39,25 @@ jobs:
           echo "COMMIT_MSG<<EOF" >> $GITHUB_ENV
           echo "$COMMIT_MSG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+
+      - name: Update Version
+        run: |
+          MAJOR=$(echo $VERSION | cut -d. -f1)
+          MINOR=$(echo $VERSION | cut -d. -f2)
+          PATCH=$(echo $VERSION | cut -d. -f3)
+
+          if [[ "$BUMP" == "major" ]]; then
+            MAJOR=$((MAJOR + 5))
+            MINOR=0
+            PATCH=0
+          elif [[ "$BUMP" == "minor" ]]; then
+            MINOR=$((MINOR + 3))
+            PATCH=0
+          else
+            PATCH=$((PATCH + 1))
+          fi
+
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "$NEW_VERSION" > VERSION
+          echo "New version: $NEW_VERSION"
