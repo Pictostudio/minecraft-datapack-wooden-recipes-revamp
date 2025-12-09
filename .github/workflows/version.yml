@@ -24,9 +24,9 @@ jobs:
           COMMIT_MSG=$(git log -1 --pretty=%B) 
           BUMP="patch"
 
-          if [[ "$COMMIT_MSG" == *"[feat]"* ]]; then
+          if [[ "$COMMIT_MSG" == *"feat:"* ]]; then
             BUMP="major"
-          elif [[ "$COMMIT_MSG" == *"[fix]"* ]]; then
+          elif [[ "$COMMIT_MSG" == *"fix:"* ]]; then
             BUMP="minor"
           fi
 
