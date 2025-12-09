@@ -10,14 +10,15 @@ jobs:
     steps:
       - name: Fetch Code
         uses: actions/checkout@v6
-    # Reads the current version from file.
-      - name:  Read Version
+
+      # Reads the current version from file.
+      - name: Read Version
         run: |
           VERSION=$(cat VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Current version: $VERSION"
 
-        #  Detects the commit messages for use later.
+      # Detects the commit messages for use later.
       - name: Detect Commits
       # The below gets the last commit message and makes it pretty.
         run: |
@@ -30,7 +31,7 @@ jobs:
             BUMP="minor"
           fi
 
-          ADDED_DIRS=$(git diff --name-status ${{ github.event.before }} ${{ github.sha }} | grep "^A" | grep "^wrr-" || true)
+          ADDED_DIRS=$(git diff --name-status HEAD~1 HEAD | grep "^A" | grep "^wrr-" || true)
           if [[ ! -z "$ADDED_DIRS" && "$BUMP" == "patch" ]]; then
             BUMP="major"
           fi
@@ -42,22 +43,18 @@ jobs:
 
       - name: Update Version
         run: |
-          MAJOR=$(echo $VERSION | cut -d. -f1)
-          MINOR=$(echo $VERSION | cut -d. -f2)
+          # Only update the last number, keep MAJOR and MINOR at 0
           PATCH=$(echo $VERSION | cut -d. -f3)
 
           if [[ "$BUMP" == "major" ]]; then
-            MAJOR=$((MAJOR + 5))
-            MINOR=0
-            PATCH=0
+            PATCH=$((PATCH + 5))
           elif [[ "$BUMP" == "minor" ]]; then
-            MINOR=$((MINOR + 3))
-            PATCH=0
+            PATCH=$((PATCH + 3))
           else
             PATCH=$((PATCH + 1))
           fi
 
-          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          NEW_VERSION="0.0.$PATCH"
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
           echo "$NEW_VERSION" > VERSION
           echo "New version: $NEW_VERSION"
