@@ -1,5 +1,6 @@
 name: Versioning
 on: 
+  # On pushes to the development branch then run the below.
   push:
     branches:
       - development
@@ -9,8 +10,32 @@ jobs:
     steps:
       - name: Fetch Code
         uses: actions/checkout@v6
+    # Reads the current version from file.
       - name:  Read Version
         run: |
           VERSION=$(cat VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Current version: $VERSION"
+
+        #  Detects the commit messages for use later.
+      - name: Detect Commits
+      # The below gets the last commit message and makes it pretty.
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B) 
+          BUMP="patch"
+
+          if [[ "$COMMIT_MSG" == *"[major]"* ]]; then
+            BUMP="major"
+          elif [[ "$COMMIT_MSG" == *"[minor]"* ]]; then
+            BUMP="minor"
+          fi
+
+          ADDED_DIRS=$(git diff --name-status ${{ github.event.before }} ${{ github.sha }} | grep "^A" | grep "^wrr-" || true)
+          if [[ ! -z "$ADDED_DIRS" && "$BUMP" == "patch" ]]; then
+            BUMP="major"
+          fi
+
+          echo "BUMP=$BUMP" >> $GITHUB_ENV
+          echo "COMMIT_MSG<<EOF" >> $GITHUB_ENV
+          echo "$COMMIT_MSG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
