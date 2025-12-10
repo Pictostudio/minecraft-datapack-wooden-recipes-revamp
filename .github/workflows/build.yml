@@ -1,39 +1,70 @@
-name: Build Datapacks
-on: 
+name: Package & Release Datapacks
+on:
   pull_request:
+    types:
+      - closed
     branches:
       - main
-    types:
-      [closed]
 permissions:
-  contents: read
+  contents: write
 jobs:
-  package:
-    runs-on: ubuntu-latest
+  package_release:
     if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
     steps:
+      # -------------------------
+      # Step 1: Checkout repository
+      # -------------------------
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Read datapack version
+        with:
+          fetch-depth: 0
+
+      # -------------------------
+      # Step 2: Read current version
+      # -------------------------
+      - name: Read Version
         run: |
           VERSION=$(cat VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Datapack version: $VERSION"
-      - name: Create output folder
-        run: mkdir -p output
-      - name: Zip datapacks
+          echo "Packaging datapacks for version: $VERSION"
+
+      # -------------------------
+      # Step 3: Zip datapacks
+      # -------------------------
+      - name: Package datapacks
         run: |
+          mkdir -p output
           for dir in wrr-*; do
             if [ -d "$dir" ]; then
-              # Extract MC version from folder name
-              # Folder format: wrr-<MC-Version>
               MC_VERSION=$(echo $dir | sed 's/wrr-//')
               zip -r "output/${dir}-${VERSION}.zip" "$dir"
               echo "Zipped $dir → output/${dir}-${VERSION}.zip"
             fi
           done
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+
+      # -------------------------
+      # Step 4: Create GitHub Release
+      # -------------------------
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: datapacks-v${{ env.VERSION }}
-          path: output/*.zip
+          tag_name: "v${{ env.VERSION }}"
+          name: "v${{ env.VERSION }}"
+          body: |
+            Changelog for v${{ env.VERSION }}:
+
+            $(cat CHANGELOG.md | sed '/^#/q')
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------
+      # Step 5: Upload zip assets to release
+      # -------------------------
+      - name: Upload assets to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: output/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
