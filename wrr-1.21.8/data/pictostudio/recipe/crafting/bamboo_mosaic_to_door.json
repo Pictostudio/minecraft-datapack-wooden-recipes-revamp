@@ -1,0 +1,16 @@
+{
+    "type": "crafting_shaped",
+    "group": "wooden_trapdoor",
+    "pattern": [
+        "BB ",
+        "BB ",
+        "BB "
+    ],
+    "key": {
+        "B": "minecraft:bamboo_mosaic"
+    },
+    "result": {
+        "id": "minecraft:bamboo_door",
+        "count": 6
+    }
+}
