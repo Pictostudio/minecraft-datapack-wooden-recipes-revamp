@@ -1,3 +1,7 @@
+# 0.0.175
+- fix: update build workflow. (JordanPicton)
+- Updated to v0.0.172 (github-actions)
+
 # 0.0.172
 - fix: remove the need for pulling changelog and version constantly. (JordanPicton)
 - Updated changelog for version 0.0.169 (github-actions)
