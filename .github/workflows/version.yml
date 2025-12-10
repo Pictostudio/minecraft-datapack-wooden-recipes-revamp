@@ -44,6 +44,7 @@ jobs:
           echo "$COMMIT_MSG" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
+        # Checks that the author is myself.
       - name: Check commit author
         run: |
           AUTHOR=$(git log -1 --pretty=format:'%an')

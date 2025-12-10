@@ -1,0 +1,85 @@
+name: Changelog
+on:
+  push:
+    branches:
+      - development
+
+permissions:
+  contents: write
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # required for commit history
+
+      - name: Read version
+        run: |
+          VERSION=$(cat VERSION)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Check author
+        run: |
+          AUTHOR=$(git log -1 --pretty=format:'%an')
+          echo "Commit author: $AUTHOR"
+
+          if [[ "$AUTHOR" == "JordanPicton" ]]; then
+            echo "UPDATE=true" >> $GITHUB_ENV
+          else
+            echo "UPDATE=false" >> $GITHUB_ENV
+          fi
+
+      - name: Get commit message
+        if: env.UPDATE == 'true'
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "COMMIT_MSG<<EOF" >> $GITHUB_ENV
+          echo "$COMMIT_MSG" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Update CHANGELOG.md
+        if: env.UPDATE == 'true'
+        run: |
+          CHANGELOG="CHANGELOG.md"
+          VERSION_HEADER="# $VERSION"
+
+          # If file doesn't exist, create it
+          if [ ! -f "$CHANGELOG" ]; then
+            echo "$VERSION_HEADER" > $CHANGELOG
+            echo "" >> $CHANGELOG
+          fi
+
+          # If version header does not exist, create it at the top
+          if ! grep -q "^$VERSION_HEADER" "$CHANGELOG"; then
+            cp "$CHANGELOG" "$CHANGELOG.tmp"
+            echo "$VERSION_HEADER" > "$CHANGELOG"
+            echo "" >> "$CHANGELOG"
+            echo "" >> "$CHANGELOG"
+            cat "$CHANGELOG.tmp" >> "$CHANGELOG"
+            rm "$CHANGELOG.tmp"
+          fi
+
+          # Append commit message under the correct version header
+          awk -v ver="$VERSION_HEADER" -v msg="$COMMIT_MSG" '
+            $0 == ver {
+              print;
+              print "- " msg;
+              next
+            }
+            { print }
+          ' "$CHANGELOG" > "$CHANGELOG.new"
+
+          mv "$CHANGELOG.new" "$CHANGELOG"
+
+      - name: Commit changelog update
+        if: env.UPDATE == 'true'
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add CHANGELOG.md
+          git commit -m "Updated changelog for version $VERSION"
+          git push
