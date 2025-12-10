@@ -1,28 +1,32 @@
-name: Changelog
+name: Changelog Updating
+
 on:
   workflow_run:
-    workflows: ["Versioning"]
-    types: 
+    workflows: ["Versioning"] 
+    types:
       - completed
+
 permissions:
   contents: write
 
 jobs:
   changelog:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
-    steps:
 
-      - name: Checkout repo
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0  # required for commit history
+          fetch-depth: 0 
 
       - name: Read version
         run: |
           VERSION=$(cat VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Current version: $VERSION"
 
-      - name: Check author
+      - name: Check last commit author
         run: |
           AUTHOR=$(git log -1 --pretty=format:'%an')
           echo "Commit author: $AUTHOR"
@@ -31,9 +35,8 @@ jobs:
             echo "UPDATE=true" >> $GITHUB_ENV
           else
             echo "UPDATE=false" >> $GITHUB_ENV
-          fi
 
-      - name: Get commit message
+      - name: Get last commit message
         if: env.UPDATE == 'true'
         run: |
           COMMIT_MSG=$(git log -1 --pretty=%B)
@@ -47,13 +50,13 @@ jobs:
           CHANGELOG="CHANGELOG.md"
           VERSION_HEADER="# $VERSION"
 
-          # If file doesn't exist, create it
+          # Create file if missing
           if [ ! -f "$CHANGELOG" ]; then
-            echo "$VERSION_HEADER" > $CHANGELOG
-            echo "" >> $CHANGELOG
+            echo "$VERSION_HEADER" > "$CHANGELOG"
+            echo "" >> "$CHANGELOG"
           fi
 
-          # If version header does not exist, create it at the top
+          # If version header does not exist, add it at top
           if ! grep -q "^$VERSION_HEADER" "$CHANGELOG"; then
             cp "$CHANGELOG" "$CHANGELOG.tmp"
             echo "$VERSION_HEADER" > "$CHANGELOG"
@@ -63,7 +66,7 @@ jobs:
             rm "$CHANGELOG.tmp"
           fi
 
-          # Append commit message under the correct version header
+          # Append commit message under the correct version
           awk -v ver="$VERSION_HEADER" -v msg="$COMMIT_MSG" '
             $0 == ver {
               print;
@@ -72,10 +75,9 @@ jobs:
             }
             { print }
           ' "$CHANGELOG" > "$CHANGELOG.new"
-
           mv "$CHANGELOG.new" "$CHANGELOG"
 
-      - name: Commit changelog update
+      - name: Commit updated CHANGELOG.md
         if: env.UPDATE == 'true'
         run: |
           git config user.name "github-actions"
