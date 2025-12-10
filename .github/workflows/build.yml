@@ -5,9 +5,35 @@ on:
       - main
     types:
       [closed]
+permissions:
+  contents: read
 jobs:
-  if_merged:
-    if: github.event.pull_request.merged == true
+  package:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
     steps:
-      - run: echo "This merge was successful!"
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Read datapack version
+        run: |
+          VERSION=$(cat VERSION)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Datapack version: $VERSION"
+      - name: Create output folder
+        run: mkdir -p output
+      - name: Zip datapacks
+        run: |
+          for dir in wrr-*; do
+            if [ -d "$dir" ]; then
+              # Extract MC version from folder name
+              # Folder format: wrr-<MC-Version>
+              MC_VERSION=$(echo $dir | sed 's/wrr-//')
+              zip -r "output/${dir}-${VERSION}.zip" "$dir"
+              echo "Zipped $dir → output/${dir}-${VERSION}.zip"
+            fi
+          done
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: datapacks-v${{ env.VERSION }}
+          path: output/*.zip
