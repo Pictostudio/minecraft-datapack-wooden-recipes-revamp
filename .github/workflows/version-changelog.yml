@@ -1,4 +1,4 @@
-name: Versioning + Changelog
+name: Version + Changelog
 
 on:
   push:
@@ -9,89 +9,109 @@ permissions:
   contents: write
 
 jobs:
-  versioning_and_changelog:
+  version_changelog:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout repository
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
+      # -------------------------
+      # Step 1: Read current version
+      # -------------------------
       - name: Read Version
         run: |
           VERSION=$(cat VERSION)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Current datapack version: $VERSION"
 
-      - name: Detect Commits & Bump
+      # -------------------------
+      # Step 2: Determine version bump
+      # -------------------------
+      - name: Determine version bump
         run: |
           COMMIT_MSG=$(git log -1 --pretty=%B)
-          BUMP="patch"
-          [[ "$COMMIT_MSG" == *"feat:"* ]] && BUMP="major"
-          [[ "$COMMIT_MSG" == *"fix:"* ]] && BUMP="minor"
-          ADDED_DIRS=$(git diff --name-status HEAD~1 HEAD | grep "^A" | grep "^wrr-" || true)
-          [[ ! -z "$ADDED_DIRS" && "$BUMP" == "patch" ]] && BUMP="major"
+          echo "Last commit message: $COMMIT_MSG"
 
-          AUTHOR=$(git log -1 --pretty=format:'%an')
-          echo "AUTHOR=$AUTHOR" >> $GITHUB_ENV
+          BUMP=0
+          SINGULAR=false
+
+          case "$COMMIT_MSG" in
+            feat:*) BUMP=5 ;;
+            fix:*) BUMP=3 ;;
+            patch:*) BUMP=1 ;;
+            hot-fix:*) BUMP=1; SINGULAR=true ;;
+          esac
+
           echo "BUMP=$BUMP" >> $GITHUB_ENV
+          echo "SINGULAR=$SINGULAR" >> $GITHUB_ENV
 
-      - name: Update Version
-        if: env.AUTHOR == 'JordanPicton'
+      # -------------------------
+      # Step 3: Update version
+      # -------------------------
+      - name: Update version
         run: |
           PATCH=$(echo $VERSION | cut -d. -f3)
-          case "$BUMP" in
-            major) PATCH=$((PATCH + 5)) ;;
-            minor) PATCH=$((PATCH + 3)) ;;
-            patch) PATCH=$((PATCH + 1)) ;;
-          esac
+          PATCH=$((PATCH + ${{ env.BUMP }}))
           NEW_VERSION="0.0.$PATCH"
           echo "$NEW_VERSION" > VERSION
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "Updated version to $NEW_VERSION"
 
-      - name: Commit Version
-        if: env.AUTHOR == 'JordanPicton'
-        run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add VERSION
-          git commit -m "Updated to v$NEW_VERSION" || echo "No changes to commit"
-          git push || echo "Push failed or nothing to push"
-
-      - name: Update Changlog
-        if: env.AUTHOR == 'JordanPicton'
+      # -------------------------
+      # Step 4: Update changelog
+      # -------------------------
+      - name: Update CHANGELOG.md
         run: |
           CHANGELOG="CHANGELOG.md"
+          LAST_FILE=".last_version_commit"
           VERSION_HEADER="# $NEW_VERSION"
-          COMMIT_MSG=$(git log -1 --pretty=%B)
+
+          if [ ! -f "$LAST_FILE" ]; then
+            git rev-list --max-parents=0 HEAD > "$LAST_FILE"
+          fi
+          LAST_COMMIT=$(cat "$LAST_FILE")
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+
+          if [ "${{ env.SINGULAR }}" == "true" ]; then
+            COMMITS=$(git log -1 HEAD --pretty=format:'- %s (%an)')
+          else
+            COMMITS=$(git log $LAST_COMMIT..HEAD --pretty=format:'- %s (%an)')
+          fi
 
           if [ ! -f "$CHANGELOG" ]; then
             echo "$VERSION_HEADER" > "$CHANGELOG"
             echo "" >> "$CHANGELOG"
           fi
 
-          if ! grep -q "^$VERSION_HEADER" "$CHANGELOG"; then
-            cp "$CHANGELOG" "$CHANGELOG.tmp"
-            echo "$VERSION_HEADER" > "$CHANGELOG"
-            echo "" >> "$CHANGELOG"
-            echo "" >> "$CHANGELOG"
-            cat "$CHANGELOG.tmp" >> "$CHANGELOG"
-            rm "$CHANGELOG.tmp"
+          cp "$CHANGELOG" "$CHANGELOG.tmp"
+          echo "$VERSION_HEADER" > "$CHANGELOG"
+          echo "$COMMITS" >> "$CHANGELOG"
+          echo "" >> "$CHANGELOG"
+          cat "$CHANGELOG.tmp" >> "$CHANGELOG"
+          rm "$CHANGELOG.tmp"
+
+          if [ "${{ env.SINGULAR }}" != "true" ]; then
+            echo "$CURRENT_COMMIT" > "$LAST_FILE"
           fi
 
-          awk -v ver="$VERSION_HEADER" -v msg="$COMMIT_MSG" '
-            $0 == ver {
-              print;
-              print "- " msg;
-              next
-            }
-            { print }
-          ' "$CHANGELOG" > "$CHANGELOG.new"
-          mv "$CHANGELOG.new" "$CHANGELOG"
-
-      - name: Commit Changelog
-        if: env.AUTHOR == 'JordanPicton'
+      # -------------------------
+      # Step 5: Commit version + changelog
+      # -------------------------
+      - name: Commit version & changelog
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add CHANGELOG.md
-          git commit -m "Updated changelog for version $NEW_VERSION" || echo "No changes to commit"
+          git add VERSION CHANGELOG.md .last_version_commit
+          git commit -m "Updated to v${{ env.NEW_VERSION }}" || echo "Nothing to commit"
           git push || echo "Push failed or nothing to push"
+
+      # -------------------------
+      # Step 6: Tag new version
+      # -------------------------
+      - name: Create Git tag
+        run: |
+          git tag "v${{ env.NEW_VERSION }}"
+          git push origin "v${{ env.NEW_VERSION }}"
